@@ -2,14 +2,15 @@ class Solution {
   public:
     int peakElement(vector<int> &arr) {
         // code here
-        for(int i=0;i<arr.size();i++){
-            if(i == 0 && arr[0] > arr[1]){
-                return i;
-            }
-            if(i>0 && arr[i]>arr[i+1] && arr[i]>arr[i-1] && i<arr.size()-1){
-                return i;
-            }
-            if(i == arr.size()-1 && arr[i] > arr[i-1]) return i;
+        int n = arr.size();
+        if(n==1) return 0;
+        int low = 0;
+        int high = n-1;
+        while(low<high){
+            int mid = low +(high - low)/2;
+            if(arr[mid]<arr[mid+1]) low = mid +1;
+            else high = mid;
         }
+        return low;
     }
 };
