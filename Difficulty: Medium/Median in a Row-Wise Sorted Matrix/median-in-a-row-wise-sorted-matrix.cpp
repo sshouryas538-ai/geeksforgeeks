@@ -1,15 +1,40 @@
 class Solution {
-  public:
+public:
     int median(vector<vector<int>> &mat) {
-        // code here
-        vector<int>ans;
-        for(int i=0;i<mat.size();i++){
-            for(int j=0;j<mat[0].size();j++){
-                ans.push_back(mat[i][j]);
-            }
+        int n = mat.size(), m = mat[0].size();
+
+        int low = INT_MAX, high = INT_MIN;
+        for (int i = 0; i < n; i++) {
+            low  = min(low,  mat[i][0]);
+            high = max(high, mat[i][m - 1]);
         }
-        sort(ans.begin(),ans.end());
-        int n = ans.size();
-        return ans[n/2];
+
+        int desired = (n * m) / 2 + 1; // position of median (1-indexed count)
+
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            int count = countLessEqual(mat, mid);
+            if (count < desired) low = mid + 1;
+            else high = mid;
+        }
+        return low;
+    }
+
+    int countLessEqual(vector<vector<int>> &mat, int x) {
+        int count = 0;
+        for (auto &row : mat) {
+            int clow = 0, chigh = row.size() - 1, idx = row.size(); // reset per row
+            while (clow <= chigh) {
+                int midd = clow + (chigh - clow) / 2;
+                if (row[midd] <= x) {
+                    idx = midd;      // not used further, kept for clarity
+                    clow = midd + 1;
+                } else {
+                    chigh = midd - 1;
+                }
+            }
+            count += clow; // clow = number of elements <= x in this row
+        }
+        return count;
     }
 };
