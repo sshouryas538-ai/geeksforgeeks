@@ -9,7 +9,7 @@ public:
             high = max(high, mat[i][m - 1]);
         }
 
-        int desired = (n * m) / 2 + 1; // position of median (1-indexed count)
+        int desired = (n * m) / 2 + 1; 
 
         while (low < high) {
             int mid = low + (high - low) / 2;
@@ -27,13 +27,13 @@ public:
             while (clow <= chigh) {
                 int midd = clow + (chigh - clow) / 2;
                 if (row[midd] <= x) {
-                    idx = midd;      // not used further, kept for clarity
+                    idx = midd;      
                     clow = midd + 1;
                 } else {
                     chigh = midd - 1;
                 }
             }
-            count += clow; // clow = number of elements <= x in this row
+            count += clow; 
         }
         return count;
     }
