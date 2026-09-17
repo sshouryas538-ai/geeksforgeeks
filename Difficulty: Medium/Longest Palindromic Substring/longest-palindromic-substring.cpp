@@ -4,8 +4,6 @@ public:
         string ans = "";
 
         for (int i = 0; i < s.size(); i++) {
-
-            // Odd length palindrome
             int f = i;
             int l = i;
 
@@ -13,17 +11,11 @@ public:
                 f--;
                 l++;
             }
-
-            // f and l have gone one step too far
             f++;
             l--;
-
             if (l - f + 1 > ans.size()) {
                 ans = s.substr(f, l - f + 1);
             }
-
-
-            // Even length palindrome
             f = i;
             l = i + 1;
 
